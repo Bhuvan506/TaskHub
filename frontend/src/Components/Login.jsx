@@ -1,38 +1,37 @@
 import React, { useEffect, useState} from 'react'
 
-function Login({isLogin, setIsLogin}) {
+function Login({isLogin, setIsLogin, loginCreds, setLoginCreds, userid, setuserid}) {
 
     const [loginOrsignup, setloginOrsignup] = useState(false)
-    const [loginCreds, setLoginCreds] = useState({});
+    // const [loginCreds, setLoginCreds] = useState({});
     const [registerCreds, setRegisterCreds] = useState({})
 
     const onChangeL = (e) => {
-        console.log(e.target.value,e.target.name);
         setLoginCreds({...loginCreds, [e.target.name]: e.target.value });
     }
 
     const onChangeR = (e) => {
-        console.log(e.target.value,e.target.name);
         setRegisterCreds({...registerCreds, [e.target.name]: e.target.value });
     }
 
     const onLogin = async (e) => {
         e.preventDefault();
-        const response = await fetch('http://localhost:8080/demo',{
-            method: 'POST',
-            body: JSON.stringify(loginCreds),
-            headers: {
-                'Content-Type': 'application/json'
-            }
+        const response = await fetch('http://localhost:8080/users',{
+            method: 'GET',
         });
         const data = await response.json();
         console.log(data);
-        setIsLogin(!isLogin);
+        for(let i = 0; i < data.length; i++) {
+            if(data[i].email == loginCreds.email && data[i].password == loginCreds.password) {
+                setuserid(data[i]._id);
+            }
+        }
+        setIsLogin(true);
     }
 
     const onRegister = async (e) => {
         e.preventDefault();
-        const response = await fetch('http://localhost:8080/demo',{
+        const response = await fetch('http://localhost:8080/users',{
             method: 'POST',
             body: JSON.stringify(registerCreds),
             headers: {
@@ -40,21 +39,19 @@ function Login({isLogin, setIsLogin}) {
             }
         });
         const data = await response.json();
-        console.log(data);
+        console.log(data._id);
+        setuserid(data._id);
+        const response2 = await fetch('http://localhost:8080/users/:id/data',{
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        const data2 = await response2.json();
+        console.log(data2);
         setloginOrsignup(!loginOrsignup);
     }
-
-    const getUsers = async () => {
-        const response = await fetch('http://localhost:8080/demo',{
-            method: 'GET',
-        });
-        const data = await response.json();
-        console.log(data);
-    }
-
-    useEffect(() => {
-        getUsers();
-    })
 
   return (
     <div className='bg-slate-100 flex min-h-screen items-center justify-center py-12 px-4 sm:px-6 lg:px-8'>

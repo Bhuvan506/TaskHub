@@ -97,6 +97,9 @@ const boardsSlice = createSlice({
       const col = board.columns.find((col, i) => i === payload.colIndex);
       col.tasks = col.tasks.filter((task, i) => i !== payload.taskIndex);
     },
+    returnData: (state, action) => {
+      return state;
+    }
   },
 });
 

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 import crossIcon from '../Assets/icon-cross.svg'
 import { useDispatch, useSelector } from 'react-redux'
-import boardsSlice from '../redux/boardsSlice'
+import boardsSlice from '../Redux/boardsSlice'
 
 function AddEditTaskModel({type, device, setOpenAddEditTask, setIsTaskModelOpen, taskIndex, prevColIndex=0}) {
 

@@ -12,21 +12,43 @@ async function main() {
 }
 
 const UserSchema = new mongoose.Schema({
-    email: {
-        type: String,
-        required: true,
-        minlength: 1,
-        trim: true
-    },
-    password: {
-        type: String,
-        required: true,
-        minlength: 1,
-        trim: true
-    }
+    email: String,
+    password: String
 })
 
+const taskSchema = new mongoose.Schema({
+  title: String,
+  description: String, 
+  status: String,
+  subtasks: [{
+    title: String,
+    isCompleted: Boolean
+  }]
+});
+
+const columnSchema = new mongoose.Schema({
+  name: String, 
+  tasks: [taskSchema]
+});
+
+const boardSchema = new mongoose.Schema({
+  name: String,
+  isActive: Boolean,
+  columns: [columnSchema]  
+});
+
+const DataSchema = new mongoose.Schema({
+    data: [boardSchema],
+    _userId: {
+        type: mongoose.Types.ObjectId,
+        required: true
+    }
+});
+
 const User = mongoose.model('User',UserSchema);
+const Data = mongoose.model('Data',DataSchema);
+// const Board = mongoose.model('Board',BoardSchema);
+// const Column = mongoose.model('Column',ColumnSchema);
 
 const server = express();
 
@@ -45,6 +67,33 @@ server.post('/users', async (req,res) => {
 server.get('/users', async (req,res) => {
     const docs = await User.find({});
     res.json(docs);
+})
+
+server.get('/users/:id/data', async (req,res) => {
+    const docs = await Data.find({
+        _userId: req.body._id
+    })
+    res.send(docs);
+})
+
+server.post('/users/:id/data', async (req,res) => {
+    let newData = new Data({
+        data: [],
+        _userId: req.body._id
+    });
+    const doc = await newData.save();
+    console.log(doc);
+    res.json(doc);
+})
+
+server.post('/users/:id/data1', async (req,res) => {
+    console.log(req.body.data);
+    console.log(req.body._userId)
+    const doc = await Data.findOneAndReplace({ _userId: req.body._userId}, {
+        data: req.body.data,
+        _userId: req.body._userId
+    })
+    res.json(doc);
 })
 
 server.listen(8080,()=>{
