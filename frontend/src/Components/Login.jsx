@@ -1,7 +1,9 @@
 import React, { useEffect, useState} from 'react'
+import boardsSlice from '../Redux/boardsSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
-function Login({isLogin, setIsLogin, loginCreds, setLoginCreds, userid, setuserid}) {
-
+function Login({setIsLogin, loginCreds, setLoginCreds, setuserid}) {
+    const dispatch = useDispatch();
     const [loginOrsignup, setloginOrsignup] = useState(false)
     // const [loginCreds, setLoginCreds] = useState({});
     const [registerCreds, setRegisterCreds] = useState({})
@@ -20,13 +22,36 @@ function Login({isLogin, setIsLogin, loginCreds, setLoginCreds, userid, setuseri
             method: 'GET',
         });
         const data = await response.json();
-        console.log(data);
+        var flag = false;
+        var userID = '';
         for(let i = 0; i < data.length; i++) {
-            if(data[i].email == loginCreds.email && data[i].password == loginCreds.password) {
+            if(data[i].email === loginCreds.email && data[i].password === loginCreds.password) {
                 setuserid(data[i]._id);
+                flag = true;
+                userID = data[i]._id;
+                break;
             }
         }
-        setIsLogin(true);
+        if(flag !== true) {
+            alert("Invalid email or password");
+        }
+        else {
+            const resp = await fetch('http://localhost:8080/users/:id/data',{
+                method: 'GET',
+            });
+            const dat = await resp.json();
+            for(let i = 0; i < dat.length; i++) {
+                if(dat[i]._userId === userID) {
+                    var boardsData = dat[i].data;
+                    for(let j = 0; j < boardsData.length; j++) {
+                        var name = boardsData[j].name;
+                        var newColumns = boardsData[j].columns;
+                        dispatch(boardsSlice.actions.addBoard({ name, newColumns }));
+                    }
+                }
+            }
+            setIsLogin(true);
+        }
     }
 
     const onRegister = async (e) => {
@@ -49,7 +74,6 @@ function Login({isLogin, setIsLogin, loginCreds, setLoginCreds, userid, setuseri
             }
         });
         const data2 = await response2.json();
-        console.log(data2);
         setloginOrsignup(!loginOrsignup);
     }
 
@@ -197,3 +221,6 @@ function Login({isLogin, setIsLogin, loginCreds, setLoginCreds, userid, setuseri
 }
 
 export default Login;
+
+
+{/* <div class="ab xh adg adt alo ari asu avd avk bbo bem bvg bzj bzr ceq" id="headlessui-dialog-panel-2" data-headlessui-state="open"><div class="bxr cbg"><div class="gx lx nj rl up yz ze ads akl buz bxz byt"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" class="oc se azc"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"></path></svg></div><div class="lf avl bwj bwv chs"><h3 class="avy awg awp axv" id="headlessui-dialog-title-3" data-headlessui-state="open">Deactivate account</h3><div class="lb"><p class="awa axr">Are you sure you want to deactivate your account? All of your data will be permanently removed from our servers forever. This action cannot be undone.</p></div></div></div><div class="lj bxg bxr cbc"><button type="button" class="ly tn ze adu akq arf arv awa awg bah bbn bji bwh bzi">Deactivate</button><button type="button" class="lf ly tn ze adu alo arf arv awa awg axv bbn bbt bbx bcf bih bwv bzi">Cancel</button></div></div> */}

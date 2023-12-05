@@ -65,7 +65,7 @@ function App() {
           :
           <>
             <Header boardModelOpen={boardModelOpen} setBoardModelOpen={setBoardModelOpen}/>
-            <Login isLogin={isLogin} setIsLogin={setIsLogin} loginCreds={loginCreds} setLoginCreds={setLoginCreds} userid={userid} setuserid={setuserid}/>
+            <Login setIsLogin={setIsLogin} loginCreds={loginCreds} setLoginCreds={setLoginCreds} setuserid={setuserid}/>
           </> 
         }
       </>

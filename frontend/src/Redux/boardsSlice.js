@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, current } from "@reduxjs/toolkit";
 import data from "../Data/data.json";
 
 const boardsSlice = createSlice({

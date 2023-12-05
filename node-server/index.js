@@ -70,9 +70,7 @@ server.get('/users', async (req,res) => {
 })
 
 server.get('/users/:id/data', async (req,res) => {
-    const docs = await Data.find({
-        _userId: req.body._id
-    })
+    const docs = await Data.find({})
     res.send(docs);
 })
 
