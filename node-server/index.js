@@ -60,7 +60,6 @@ server.post('/users', async (req,res) => {
     user.email = req.body.email;
     user.password = req.body.password;
     const doc = await user.save();
-    console.log(doc);
     res.json(doc);
 })
 
@@ -80,7 +79,6 @@ server.post('/users/:id/data', async (req,res) => {
         _userId: req.body._id
     });
     const doc = await newData.save();
-    console.log(doc);
     res.json(doc);
 })
 
