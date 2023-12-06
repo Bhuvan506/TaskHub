@@ -11,6 +11,7 @@ function App() {
   const dispatch = useDispatch()
   const boards = useSelector((state) => state.boards)
   const activeBoard = boards.find(board => board.isActive)
+  const [boardType, setBoardType] = useState('add')
   const [isSideBarOpen, setIsSideBarOpen] = useState(true)
   const [isLogin, setIsLogin] = useState(false);
   const [loginCreds, setLoginCreds] = useState({})
@@ -51,12 +52,12 @@ function App() {
           <>
             {boards.length > 0 ?
               <>
-                <Header boardModelOpen={boardModelOpen} setBoardModelOpen={setBoardModelOpen}/>
-                <Center boardModelOpen={boardModelOpen} setBoardModelOpen={setBoardModelOpen}/>
+                <Header boardModelOpen={boardModelOpen} setBoardModelOpen={setBoardModelOpen} setBoardType={setBoardType} boardType={boardType}/>
+                <Center boardModelOpen={boardModelOpen} setBoardModelOpen={setBoardModelOpen} setBoardType={setBoardType} boardType={boardType}/>
               </>
               :
               <>
-                <Header boardModelOpen={boardModelOpen} setBoardModelOpen={setBoardModelOpen}/>
+                <Header boardModelOpen={boardModelOpen} setBoardModelOpen={setBoardModelOpen} setBoardType={setBoardType} boardType={boardType}/>
                 <Sidebar isSideBarOpen={isSideBarOpen} setIsSideBarOpen={setIsSideBarOpen}/>
                 <EmptyBoard type='add'/>
               </>

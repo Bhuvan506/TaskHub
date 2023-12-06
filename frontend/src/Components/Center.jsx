@@ -4,10 +4,10 @@ import { useSelector } from 'react-redux'
 import Column from './Column'
 import AddEditBoardModel from '../Models/AddEditBoardModel'
 
-function Center({boardModelOpen, setBoardModelOpen}) {
+function Center({boardModelOpen, setBoardModelOpen, boardType, setBoardType}) {
 
   const [isSideBarOpen, setIsSideBarOpen] = useState(false)
-
+  const [boardtype, setboardtype] = useState(boardType)
   const boards = useSelector((state) => state.boards)
   const board = boards.find((board) => board.isActive === true)
   const columns = board.columns
@@ -44,6 +44,8 @@ function Center({boardModelOpen, setBoardModelOpen}) {
             <Column key={index} colIndex={index} />
           ))}
           <div onClick={() => {
+            // setBoardType('edit');
+            setboardtype('edit');
               setBoardModelOpen(true);
             }}
             className=' h-screen dark:bg-[#2b2c3740] flex justify-center items-center font-bold text-2xl hover:text-[#635fc7] transition duration-300 cursor-pointer bg-[#e9effa] scrollbar-hide mb-2   mx-5 pt-[90px] min-w-[280px] text-[#828fa3] mt-[135px] rounded-lg ' >
@@ -57,7 +59,7 @@ function Center({boardModelOpen, setBoardModelOpen}) {
       )}
       {
         boardModelOpen && (
-          <AddEditBoardModel type='edit' setBoardModelOpen={setBoardModelOpen} />
+          <AddEditBoardModel type={boardtype} setBoardModelOpen={setBoardModelOpen} />
         )
       }
     </div>

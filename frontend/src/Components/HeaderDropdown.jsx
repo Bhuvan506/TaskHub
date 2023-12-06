@@ -7,7 +7,7 @@ import { Switch } from '@headlessui/react'
 import DarkMode from '../Hooks/DarkMode'
 import boardsSlice from '../redux/boardsSlice'
 
-function HeaderDropdown({setOpenDropdown, setBoardModelOpen, type}) {
+function HeaderDropdown({setOpenDropdown, setBoardModelOpen, setBoardType, boardType}) {
 
     const dispatch = useDispatch();
 
@@ -21,6 +21,12 @@ function HeaderDropdown({setOpenDropdown, setBoardModelOpen, type}) {
     }
 
     const boards = useSelector((state) => state.boards);
+
+    const onCreate = () => {
+        setBoardType('add')
+        setBoardModelOpen(true)
+        setOpenDropdown(false)
+    }
 
   return (
     <div className=' py-10 px-6 absolute left-0 right-0 bottom-[-100vh] top-16 bg-[#00000080]' onClick={
@@ -46,10 +52,7 @@ function HeaderDropdown({setOpenDropdown, setBoardModelOpen, type}) {
                         <p className=' text-lg font-bold'>{board.name}</p>
                     </div>
                 ))}
-                <div className=' cursor-pointer flex items-baseline space-x-2 text-[#635fc7] px-5 py-4' onClick={()=>{
-                    setBoardModelOpen(true)
-                    setOpenDropdown(false)
-                }}>
+                <div className=' cursor-pointer flex items-baseline space-x-2 text-[#635fc7] px-5 py-4' onClick={onCreate}>
                     <img src={boardIcon} className='h-4'/>
                     <p className=' text-lg font-bold'>
                         Create New Board

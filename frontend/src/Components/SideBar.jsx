@@ -79,7 +79,7 @@ function Sidebar({ isSideBarOpen, setIsSideBarOpen }) {
       </div>
 
       {isBoardModelOpen && (
-        <AddEditBoardModel type='add' setIsBoardModelOpen={setIsBoardModelOpen} />
+        <AddEditBoardModel type='add' setBoardModelOpen={setIsBoardModelOpen} />
       )}
     </div>
   );

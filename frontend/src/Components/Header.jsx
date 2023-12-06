@@ -11,21 +11,23 @@ import ElipsisMenu from './ElipsisMenu'
 import DeleteModel from '../Models/DeleteModel'
 import boardsSlice from '../redux/boardsSlice'
 
-function Header({ setBoardModelOpen, boardModelOpen}) {
+function Header({ setBoardModelOpen, boardModelOpen, boardType, setBoardType}) {
 
     const dispatch = useDispatch()
 
     const [openDropdown, setOpenDropdown] = useState(false)
     const [isDeleteModelOpen, setIsDeleteModelOpen] = useState(false)
+    const [boardtype, setboardtype] = useState(boardType)
+    const [boardmodelopen, setboardmodelopen] = useState(boardModelOpen)
     const [openAddEditTask, setOpenAddEditTask] = useState(false)
     const [isElipsisOpen, setIsElipsisOpen] = useState(false)
-    const [boardType, setBoardType] = useState('add')
 
     const boards = useSelector((state) => state.boards)
     const board = boards.find(board => board.isActive)
 
     const setOpenEditModel = () => {
-        setBoardModelOpen(true)
+        setboardtype('edit')
+        setboardmodelopen(true)
         setIsElipsisOpen(false)
     }
 
@@ -41,9 +43,11 @@ function Header({ setBoardModelOpen, boardModelOpen}) {
     }
 
     const onDropdownClick = () => {
+        // setBoardType('add');
+        setboardtype('add');
         setOpenDropdown(state => !state)
-        setIsElipsisOpen(false)
-        setBoardType('add')
+        setIsElipsisOpen(false);
+        console.log(boardtype);
     }
 
   return (
@@ -76,7 +80,8 @@ function Header({ setBoardModelOpen, boardModelOpen}) {
                 </button>
 
                 <img src={elipsis} alt="elipsis" className=' cursor-pointer h-6' onClick={()=>{
-                    setBoardType('edit')
+                    // setBoardType('edit')
+                    setboardtype('edit')
                     setOpenDropdown(false)
                     setIsElipsisOpen(state => !state)
                 }}/>
@@ -86,10 +91,12 @@ function Header({ setBoardModelOpen, boardModelOpen}) {
             </div>):('')}
         </header>
 
-        {openDropdown && <HeaderDropdown setBoardModelOpen={setBoardModelOpen} setOpenDropdown={setOpenDropdown} />}
+        {
+            openDropdown && <HeaderDropdown setBoardModelOpen={setboardmodelopen} setOpenDropdown={setOpenDropdown} setBoardType={setboardtype} boardType={boardtype}/>
+        }
 
         {
-            boardModelOpen && <AddEditBoardModel type={boardType} setBoardModelOpen={setBoardModelOpen}/>
+            boardmodelopen && <AddEditBoardModel type={boardtype} setBoardModelOpen={setboardmodelopen}/>
         }
 
         {
