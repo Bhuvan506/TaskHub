@@ -1,6 +1,6 @@
 ---
-- name: Pull Docker images
-  host: all
+- name: Pull Docker Images
+  hosts: all
   vars:
     ansible_python_interpreter: /usr/bin/python3
   tasks:
