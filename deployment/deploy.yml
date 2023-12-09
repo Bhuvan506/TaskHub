@@ -8,7 +8,7 @@
     shell: mkdir -p spe_main_project_ansible
   - name: Copy Docker Compose
     copy:
-      src: /var/lib/jenkins/workspace/TaskHub/docker-compose.yml
+      src: /var/lib/jenkins/workspace/SPE-Project/docker-compose.yml
       dest: /home/bhuvan/spe_main_project_ansible/docker-compose.yml
   - name: Stop Docker Compose
     command: docker-compose down
