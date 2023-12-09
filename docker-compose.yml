@@ -1,0 +1,21 @@
+version: '3.8'
+services:
+  mongodb:
+    image: mongo
+    container_name: database
+    volumes:
+      - /home/bhuvan/Desktop/spe/database
+    restart: unless-stopped
+  server:
+    image: nodejs_backend
+    container_name: backend
+    ports:
+      - '4000:4000'
+    restart: unless-stopped
+  client:
+    image: vite_frontend
+    container_name: frontend
+    ports:
+      - '8000:8000'
+    restart: unless-stopped
+    

@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Switch } from '@headlessui/react';
-import boardIcon from '../assets/icon-board.svg';
+import boardIcon from '../Assets/icon-board.svg';
 import DarkMode from '../Hooks/DarkMode';
 import darkIcon from '../Assets/icon-dark-theme.svg';
 import lightIcon from '../Assets/icon-light-theme.svg';
 
-import showSidebarIcon from '../assets/icon-show-sidebar.svg';
-import hideSidebarIcon from '../assets/icon-hide-sidebar.svg';
+import showSidebarIcon from '../Assets/icon-show-sidebar.svg';
+import hideSidebarIcon from '../Assets/icon-hide-sidebar.svg';
 
-import boardsSlice from '../redux/boardsSlice';
+import boardsSlice from '../Redux/boardsSlice';
 import AddEditBoardModel from '../Models/AddEditBoardModel';
 
 function Sidebar({ isSideBarOpen, setIsSideBarOpen }) {

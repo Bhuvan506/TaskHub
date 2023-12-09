@@ -14,7 +14,7 @@ function App() {
   const [boardType, setBoardType] = useState('add')
   const [isSideBarOpen, setIsSideBarOpen] = useState(true)
   const [isLogin, setIsLogin] = useState(false);
-  const [loginCreds, setLoginCreds] = useState({})
+  // const [loginCreds, setLoginCreds] = useState({})
   const [userid, setuserid] = useState("")
 
   if(!activeBoard && boards.length > 0) {
@@ -24,7 +24,7 @@ function App() {
   const [boardModelOpen, setBoardModelOpen] = useState(false)
 
   const UpdateBoards = async () => {
-    const response = await fetch('http://localhost:8080/users/:id/data1',{
+    const response = await fetch('http://localhost:4000/users/:id/data1',{
       method: 'POST',
       body: JSON.stringify({
         data: boards,
@@ -66,7 +66,7 @@ function App() {
           :
           <>
             <Header boardModelOpen={boardModelOpen} setBoardModelOpen={setBoardModelOpen}/>
-            <Login setIsLogin={setIsLogin} loginCreds={loginCreds} setLoginCreds={setLoginCreds} setuserid={setuserid}/>
+            <Login setIsLogin={setIsLogin} setuserid={setuserid}/>
           </> 
         }
       </>

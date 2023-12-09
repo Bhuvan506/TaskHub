@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { shuffle } from 'lodash'
 import Task from './Task'
-import boardsSlice from '../redux/boardsSlice'
+import boardsSlice from '../Redux/boardsSlice'
 
 function Column({ colIndex }) {
     const colors = [

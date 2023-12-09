@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import AddEditTaskModel from '../Models/AddEditTaskModel'
 import ElipsisMenu from './ElipsisMenu'
 import DeleteModel from '../Models/DeleteModel'
-import boardsSlice from '../redux/boardsSlice'
+import boardsSlice from '../Redux/boardsSlice'
 
 function Header({ setBoardModelOpen, boardModelOpen, boardType, setBoardType}) {
 

@@ -5,7 +5,7 @@ import lightIcon from '../Assets/icon-light-theme.svg'
 import darkIcon from '../Assets/icon-dark-theme.svg'
 import { Switch } from '@headlessui/react'
 import DarkMode from '../Hooks/DarkMode'
-import boardsSlice from '../redux/boardsSlice'
+import boardsSlice from '../Redux/boardsSlice'
 
 function HeaderDropdown({setOpenDropdown, setBoardModelOpen, setBoardType, boardType}) {
 

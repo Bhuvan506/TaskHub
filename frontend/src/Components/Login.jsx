@@ -2,10 +2,10 @@ import React, { useEffect, useState} from 'react'
 import boardsSlice from '../Redux/boardsSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
-function Login({setIsLogin, loginCreds, setLoginCreds, setuserid}) {
+function Login({setIsLogin, setuserid}) {
     const dispatch = useDispatch();
     const [loginOrsignup, setloginOrsignup] = useState(false)
-    // const [loginCreds, setLoginCreds] = useState({});
+    const [loginCreds, setLoginCreds] = useState({});
     const [registerCreds, setRegisterCreds] = useState({})
 
     const onChangeL = (e) => {
@@ -13,12 +13,13 @@ function Login({setIsLogin, loginCreds, setLoginCreds, setuserid}) {
     }
 
     const onChangeR = (e) => {
+        setLoginCreds({...loginCreds, [e.target.name]: e.target.value });
         setRegisterCreds({...registerCreds, [e.target.name]: e.target.value });
     }
 
     const onLogin = async (e) => {
         e.preventDefault();
-        const response = await fetch('http://localhost:8080/users',{
+        const response = await fetch('http://localhost:4000/users',{
             method: 'GET',
         });
         const data = await response.json();
@@ -33,10 +34,10 @@ function Login({setIsLogin, loginCreds, setLoginCreds, setuserid}) {
             }
         }
         if(flag !== true) {
-            alert("Invalid email or password");
+            alert("Incorrect email or password");
         }
         else {
-            const resp = await fetch('http://localhost:8080/users/:id/data',{
+            const resp = await fetch('http://localhost:4000/users/:id/data',{
                 method: 'GET',
             });
             const dat = await resp.json();
@@ -56,25 +57,49 @@ function Login({setIsLogin, loginCreds, setLoginCreds, setuserid}) {
 
     const onRegister = async (e) => {
         e.preventDefault();
-        const response = await fetch('http://localhost:8080/users',{
-            method: 'POST',
-            body: JSON.stringify(registerCreds),
-            headers: {
-                'Content-Type': 'application/json'
-            }
+        const response = await fetch('http://localhost:4000/users',{
+            method: 'GET',
         });
         const data = await response.json();
-        console.log(data._id);
-        setuserid(data._id);
-        const response2 = await fetch('http://localhost:8080/users/:id/data',{
-            method: 'POST',
-            body: JSON.stringify(data),
-            headers: {
-                'Content-Type': 'application/json'
+        var flag = false;
+        var userID = '';
+        for(let i = 0; i < data.length; i++) {
+            if(data[i].email === registerCreds.email) {
+                setuserid(data[i]._id);
+                flag = true;
+                userID = data[i]._id;
+                break;
             }
-        });
-        const data2 = await response2.json();
-        setloginOrsignup(!loginOrsignup);
+        }
+        if(flag === true) {
+            alert('User already exists!');
+        }
+        else {
+            if(registerCreds.password === registerCreds.confirm_password) {
+                const response = await fetch('http://localhost:4000/users',{
+                    method: 'POST',
+                    body: JSON.stringify(registerCreds),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                const data = await response.json();
+                console.log(data._id);
+                setuserid(data._id);
+                const response2 = await fetch('http://localhost:4000/users/:id/data',{
+                    method: 'POST',
+                    body: JSON.stringify(data),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                const data2 = await response2.json();
+                setloginOrsignup(!loginOrsignup);
+            }
+            else {
+                alert("Passwords don't match!");
+            }
+        }
     }
 
   return (
@@ -182,7 +207,7 @@ function Login({setIsLogin, loginCreds, setLoginCreds, setuserid}) {
                     Confirm Password
                 </label>
                 <input
-                    name='confirm password'
+                    name='confirm_password'
                     type='password'
                     onChange={onChangeR}
                     required
