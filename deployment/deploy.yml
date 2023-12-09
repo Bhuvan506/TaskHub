@@ -1,0 +1,20 @@
+---
+- name: Pull Docker images
+  host: all
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+  tasks:
+  - name: Create new directory
+    shell: mkdir -p spe_main_project_ansible
+  - name: Copy Docker Compose
+    copy:
+      src: /var/lib/jenkins/workspace/TaskHub/docker-compose.yml
+      dest: /home/bhuvan/spe_main_project_ansible/docker-compose.yml
+  - name: Stop Docker Compose
+    command: docker-compose down
+    args:
+      chdir: /home/bhuvan/spe_main_project_ansible
+  - name: Run Docker Compose
+    command: docker-compose up -d
+    args:
+      chdir: /home/bhuvan/spe_main_project_ansible
