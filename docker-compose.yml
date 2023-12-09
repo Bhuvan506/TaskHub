@@ -4,7 +4,7 @@ services:
     image: mongo
     container_name: database
     volumes:
-      - /home/bhuvan/Desktop/spe/database
+      - /home/bhuvan/Desktop/spe/database:/data/db
     restart: unless-stopped
   server:
     image: nodejs_backend
