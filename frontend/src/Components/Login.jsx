@@ -41,7 +41,9 @@ function Login({setIsLogin, setuserid}) {
                 method: 'GET',
             });
             const dat = await resp.json();
+            console.log(dat);
             for(let i = 0; i < dat.length; i++) {
+                console.log(dat[i],dat[i].data);
                 if(dat[i]._userId === userID) {
                     var boardsData = dat[i].data;
                     for(let j = 0; j < boardsData.length; j++) {

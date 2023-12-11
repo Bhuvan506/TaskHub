@@ -24,8 +24,8 @@ function App() {
   const [boardModelOpen, setBoardModelOpen] = useState(false)
 
   const UpdateBoards = async () => {
-    const response = await fetch('http://localhost:4000/users/:id/data',{
-      method: 'PATCH',
+    const response = await fetch('http://localhost:4000/users/:id/data1',{
+      method: 'POST',
       body: JSON.stringify({
         data: boards,
         _userId: userid

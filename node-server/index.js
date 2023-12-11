@@ -88,7 +88,7 @@ server.post('/users/:id/data', async (req,res) => {
     res.json(doc);
 })
 
-server.patch('/users/:id/data', async (req,res) => {
+server.post('/users/:id/data1', async (req,res) => {
     const doc = await Data.findOneAndReplace({ _userId: req.body._userId}, {
         data: req.body.data,
         _userId: req.body._userId
