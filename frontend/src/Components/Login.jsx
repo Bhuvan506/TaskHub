@@ -94,6 +94,7 @@ function Login({setIsLogin, setuserid}) {
                     }
                 });
                 const data2 = await response2.json();
+                console.log(data2);
                 setloginOrsignup(!loginOrsignup);
             }
             else {

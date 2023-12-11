@@ -80,8 +80,6 @@ server.get('/users/:id/data', async (req,res) => {
 })
 
 server.post('/users/:id/data', async (req,res) => {
-    console.log(req.body.data);
-    console.log(req.body._userId);
     let newData = new Data({
         data: [],
         _userId: req.body._id
@@ -92,8 +90,6 @@ server.post('/users/:id/data', async (req,res) => {
 })
 
 server.post('/users/:id/data1', async (req,res) => {
-    console.log(req.body.data);
-    console.log(req.body._userId);
     const doc = await Data.findOneAndReplace({ _userId: req.body._userId}, {
         data: req.body.data,
         _userId: req.body._userId
