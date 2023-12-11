@@ -6,7 +6,7 @@
   tasks:
     - name: Pull server image
       docker_image: 
-        name: bhuvan506/nodesjs_backend:latest
+        name: bhuvan506/nodejs_backend:latest
         source: pull
     - name: Pull client image
       docker_image:
