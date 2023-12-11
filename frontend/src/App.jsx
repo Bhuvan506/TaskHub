@@ -31,16 +31,18 @@ function App() {
         _userId: userid
       }),
       headers: {
-        'Accept': 'application/json',
         'Content-Type': 'application/json'
     }
     });
     const data = await response.json();
+    console.log(data);
     console.log(JSON.stringify(boards));
   }
 
   useEffect(() => {
+    console.log(isLogin);
     if(isLogin) {
+      console.log("inside");
       UpdateBoards();
     }
   })
