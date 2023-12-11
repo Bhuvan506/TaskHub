@@ -23,6 +23,7 @@ function Login({setIsLogin, setuserid}) {
             method: 'GET',
         });
         const data = await response.json();
+        console.log(data);
         var flag = false;
         var userID = '';
         for(let i = 0; i < data.length; i++) {
