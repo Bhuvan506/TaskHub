@@ -25,7 +25,7 @@ function App() {
 
   const UpdateBoards = async () => {
     const response = await fetch('http://localhost:4000/users/:id/data1',{
-      method: 'POST',
+      method: 'PATCH',
       body: JSON.stringify({
         data: boards,
         _userId: userid
@@ -35,7 +35,8 @@ function App() {
     }
     });
     const data = await response.json();
-    console.log(data);
+    console.log(data,"d");
+    console.log(boards,"b");
     console.log(JSON.stringify(boards));
   }
 

@@ -85,16 +85,14 @@ server.post('/users/:id/data', async (req,res) => {
         _userId: req.body._id
     });
     const doc = await newData.save();
-    console.log(doc);
     res.json(doc);
 })
 
-server.post('/users/:id/data1', async (req,res) => {
+server.patch('/users/:id/data', async (req,res) => {
     const doc = await Data.findOneAndReplace({ _userId: req.body._userId}, {
         data: req.body.data,
         _userId: req.body._userId
     })
-    console.log(doc);
     res.json(doc);
 })
 
