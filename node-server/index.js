@@ -2,6 +2,9 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const morgan = require('morgan');
+const fs = require('fs');
+const path = require('path');
 
 main().catch(err => console.log(err));
 
@@ -52,7 +55,10 @@ const Data = mongoose.model('Data',DataSchema);
 
 const server = express();
 
+var accessLogStream = fs.createWriteStream(path.join(__dirname,'logs.log'),{flags: 'a'});
+
 server.use(cors());
+server.use(morgan('combined', {stream: accessLogStream}));
 server.use(bodyParser.json());
 
 server.post('/users', async (req,res) => {
