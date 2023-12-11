@@ -4,6 +4,14 @@
   vars:
     ansible_python_interpreter: /usr/bin/python3
   tasks:
+    - name: Pull server image
+      docker_image: 
+        name: bhuvan506/nodesjs_backend:latest
+        source: pull
+    - name: Pull client image
+      docker_image:
+        name: bhuvan506/vite_frontend:latest
+        source: pull
     - name: Create new directory
       shell: mkdir -p spe_main_project_ansible
     - name: Copy Docker Compose
@@ -14,6 +22,8 @@
       command: docker-compose down
       args:
         chdir: /home/bhuvan/spe_main_project_ansible
+    - name: Remove old images
+      shell: docker image rm bhuvan506/vite_frontend bhuvan506/nodejs_backend
     - name: Run Docker Compose
       command: docker-compose up -d
       args:
