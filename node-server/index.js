@@ -5,11 +5,18 @@ const mongoose = require('mongoose');
 const morgan = require('morgan');
 const fs = require('fs');
 const path = require('path');
+const config = require('./config');
+const dotenv = require('dotenv');
 
 main().catch(err => console.log(err));
 
+dotenv.config();
+const env = process.env.NODE_ENV || 'production';
+const DBurl = config[env].DBurl;
+const Port = config[env].Port;
+
 async function main() {
-    await mongoose.connect('mongodb://database:27017/taskM');
+    await mongoose.connect(DBurl);
     console.log('db connected');
   // use `await mongoose.connect('mongodb://user:password@127.0.0.1:27017/test');` if your database has auth enabled
 }
@@ -96,7 +103,7 @@ server.post('/users/:id/data1', async (req,res) => {
     res.json(doc);
 })
 
-server.listen(4000,()=>{
+server.listen(Port,()=>{
     console.log("Server is running on port 4000");
 })
 
