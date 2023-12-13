@@ -2,7 +2,7 @@ const dotenv = require('dotenv');
 
 dotenv.config();
 
-export const config = {
+const config = {
     production: {
         DBurl: process.env.DB_URL,
         Port: process.env.PROD_PORT,
@@ -12,3 +12,5 @@ export const config = {
         Port: process.env.TEST_PORT,
     },
 };
+
+module.exports = config;
